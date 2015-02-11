@@ -1,0 +1,24 @@
+{
+  "name": "meteor-pkg-add-all-files",
+  "version": "0.0.1",
+  "description": "A package helper to add all files within your package in a Meteor-esque manner",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NewSpring/meteor-pkg-get-all-files.git"
+  },
+  "keywords": [
+    "meteor",
+    "api.addAllFiles",
+    "api.addFiles"
+  ],
+  "author": "bjwiley2",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NewSpring/meteor-pkg-get-all-files/issues"
+  },
+  "homepage": "https://github.com/NewSpring/meteor-pkg-get-all-files"
+}
