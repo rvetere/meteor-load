@@ -42,7 +42,7 @@ var addAllFilesApp = function () {
   var isValidFile = function (filename, isRoot) {
     var valid = false;
 
-    if(isRoot && filename.endsWith("package.js")) {
+    if(isRoot && (filename.endsWith("package.js"))) {
       return valid;
     }
 
@@ -89,7 +89,7 @@ var addAllFilesApp = function () {
         var absoluteFilename = folder + Path.sep + filename;
         var stats = Fs.statSync(absoluteFilename);
 
-        if(stats.isDirectory() && filename !== "lib") {
+        if(stats.isDirectory() && filename !== "lib" && !fileName.startsWith(".")) {
           var isClient = !server && (client || filename === "client");
           var isServer = !client && (server || filename === "server");
           var isLib = lib;
