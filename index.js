@@ -89,7 +89,7 @@ var addAllFilesApp = function () {
         var absoluteFilename = folder + Path.sep + filename;
         var stats = Fs.statSync(absoluteFilename);
 
-        if(stats.isDirectory() && filename !== "lib" && !fileName.startsWith(".")) {
+        if(stats.isDirectory() && filename !== "lib" && !filename.startsWith(".")) {
           var isClient = !server && (client || filename === "client");
           var isServer = !client && (server || filename === "server");
           var isLib = lib;

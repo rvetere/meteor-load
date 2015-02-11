@@ -1,6 +1,6 @@
 {
   "name": "meteor-pkg-add-all-files",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A package helper to add all files within your package in a Meteor-esque manner",
   "main": "index.js",
   "scripts": {
