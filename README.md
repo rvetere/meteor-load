@@ -54,8 +54,8 @@ Use this module as follows:
 ```javascript
 var MeteorGetAll = require("meteor-pkg-get-all-files");
 
-onUseFiles = MeteorGetAll.getAllFiles("~/myMeteorProject/packages/myPackage");
-onTestFiles = MeteorGetAll.getAllFiles("~/myMeteorProject/packages/myPackage/tests");
+var onUseFiles = MeteorGetAll.getAllFiles("~/myMeteorProject/packages/myPackage");
+var onTestFiles = MeteorGetAll.getAllFiles("~/myMeteorProject/packages/myPackage/tests");
 ```
 
 onUseFiles returns something like the following:
