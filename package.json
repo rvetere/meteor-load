@@ -1,7 +1,7 @@
 {
-  "name": "meteor-pkg-add-all-files",
-  "version": "0.0.4",
-  "description": "A package helper to add all files within your package in a Meteor-esque manner",
+  "name": "meteor-pkg-get-all-files",
+  "version": "0.0.5",
+  "description": "A package helper to get all files within your package in a Meteor-esque manner",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,8 +20,5 @@
   "bugs": {
     "url": "https://github.com/NewSpring/meteor-pkg-get-all-files/issues"
   },
-  "homepage": "https://github.com/NewSpring/meteor-pkg-get-all-files",
-  "dependencies": {
-    "underscore": "^1.7.0"
-  }
+  "homepage": "https://github.com/NewSpring/meteor-pkg-get-all-files"
 }

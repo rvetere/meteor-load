@@ -1,4 +1,3 @@
-var _ = require("underscore");
 var Fs = require("fs");
 var Path = require("path");
 
@@ -17,26 +16,23 @@ if(typeof String.prototype.startsWith !== "function") {
 var addAllFilesApp = function () {
   var exts = ["js", "css", "html"];
   var contexts = null;
+  var packageRoot = null;
 
-  var main = function (api, packageName) {
-    contexts = [];
-    var relativePathToPackage = "packages" + Path.sep + packageName;
+  var main = function (rootDir) {
+    contexts = {
+      client: [],
+      server: [],
+      both: []
+    };
 
-    if(!process.cwd().endsWith(relativePathToPackage)) {
-      try {
-        process.chdir(relativePathToPackage);
-      }
-      catch(error) {
-        throw new Error("Could not find " + relativePathToPackage);
-        return;
-      }
+    packageRoot = Path.resolve(rootDir);
+
+    if(!packageRoot.endsWith("/")) {
+      packageRoot = packageRoot + "/";
     }
 
-    loadFolder(process.cwd(), false, false, false, true);
-
-    contexts.forEach(function (context) {
-      api.addFiles(context.absolute, context.architecture);
-    });
+    loadFolder(packageRoot, false, false, false, true);
+    return contexts;
   };
 
   var isValidFile = function (filename, isRoot) {
@@ -56,21 +52,16 @@ var addAllFilesApp = function () {
   };
 
   var loadFolder = function (folder, lib, client, server, isRoot) {
-    if(client && server) {
-      throw new Error("There is either a server folder within a client folder" +
-        " or vice versa at " + folder);
-    }
-
     var filenames=[];
     var folderContent = Fs.readdirSync(folder);
 
     // Load lib folder first
-    _.each(folderContent, function(filename) {
+    folderContent.forEach(function(filename) {
         if(filename !== "lib") {
           return;
         }
 
-        var absoluteFilename = folder + Path.sep + filename;
+        var absoluteFilename = Path.resolve(folder, filename);
         var stats = Fs.statSync(absoluteFilename);
 
         if(!stats.isDirectory()) {
@@ -85,11 +76,12 @@ var addAllFilesApp = function () {
     });
 
     // Load non lib folders
-    _.each(folderContent, function(filename) {
-        var absoluteFilename = folder + Path.sep + filename;
+    folderContent.forEach(function(filename) {
+        var absoluteFilename = Path.resolve(folder, filename);
         var stats = Fs.statSync(absoluteFilename);
 
-        if(stats.isDirectory() && filename !== "lib" && !filename.startsWith(".")) {
+        if(stats.isDirectory() && filename !== "lib" && filename !== "tests" &&
+          !filename.startsWith(".")) {
           var isClient = !server && (client || filename === "client");
           var isServer = !client && (server || filename === "server");
           var isLib = lib;
@@ -99,12 +91,12 @@ var addAllFilesApp = function () {
     });
 
     // Load non main files
-    _.each(folderContent, function(filename) {
+    folderContent.forEach(function(filename) {
         if(filename.startsWith("main")) {
           return;
         }
 
-        var absoluteFilename = folder + Path.sep + filename;
+        var absoluteFilename = Path.resolve(folder, filename);
         var stats = Fs.statSync(absoluteFilename);
 
         if(!stats.isDirectory() && isValidFile(absoluteFilename, isRoot)) {
@@ -122,12 +114,12 @@ var addAllFilesApp = function () {
     });
 
     // Load main files
-    _.each(folderContent, function(filename) {
+    folderContent.forEach(function(filename) {
         if(!filename.startsWith("main")) {
           return;
         }
 
-        var absoluteFilename = folder + Path.sep + filename;
+        var absoluteFilename = Path.resolve(folder, filename);
         var stats = Fs.statSync(absoluteFilename);
 
         if(!stats.isDirectory() && isValidFile(absoluteFilename, isRoot)) {
@@ -146,7 +138,7 @@ var addAllFilesApp = function () {
   };
 
   var addFile = function (absolute, client, server) {
-    var architecture = undefined;
+    var architecture = "both";
 
     if(client) {
       architecture = "client";
@@ -155,15 +147,12 @@ var addAllFilesApp = function () {
       architecture = "server";
     }
 
-    contexts.push({
-      absolute: absolute,
-      architecture: architecture
-    });
+    contexts[architecture].push(absolute.replace(packageRoot, ""));
   };
 
   return main;
 };
 
 module.exports = {
-  addAllFiles: addAllFilesApp()
+  getAllFiles: addAllFilesApp()
 };

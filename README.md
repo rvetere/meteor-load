@@ -1,69 +1,122 @@
 # meteor-pkg-get-all-files
 
-A Meteor package builder's helper to add all files within your package in a
+A Meteor package builder"s helper to get all files within your package in a
 Meteor-esque manner
 
-## Example usage
+## The problem being solved
 
 Consider the following sample package. The package.js is the following:
 
-````javascript
+```javascript
 Package.describe({
   name: "coolguy22:some-package",
-  version: '1.2.3',
-  summary: 'A summary here',
-  git: 'The git url goes here',
-  documentation: 'README.md'
+  version: "1.2.3",
+  summary: "A summary here",
+  git: "The git url goes here",
+  documentation: "README.md"
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom('1.0.3.1');
+  api.versionsFrom("1.0.3.1");
 
-  api.addFiles('lib/client/a.js', 'client');
-  api.addFiles('lib/client/z.js', 'client');
-  api.addFiles('lib/client/main.js', 'client');
+  api.addFiles("lib/client/a.js", "client");
+  api.addFiles("lib/client/z.js", "client");
+  api.addFiles("lib/client/main.js", "client");
 
-  api.addFiles('lib/server/a.js', 'server');
-  api.addFiles('lib/server/z.js', 'server');
-  api.addFiles('lib/server/main.js', 'server');
+  api.addFiles("lib/server/a.js", "server");
+  api.addFiles("lib/server/z.js", "server");
+  api.addFiles("lib/server/main.js", "server");
 
-  api.addFiles('lib/a.js');
-  api.addFiles('lib/z.js');
-  api.addFiles('lib/main.js');
+  api.addFiles("lib/a.js");
+  api.addFiles("lib/z.js");
+  api.addFiles("lib/main.js");
 
-  api.addFiles('client/a.js', 'client');
-  api.addFiles('client/z.js', 'client');
-  api.addFiles('client/main.js', 'client');
+  api.addFiles("client/a.js", "client");
+  api.addFiles("client/z.js", "client");
+  api.addFiles("client/main.js", "client");
 
-  api.addFiles('server/a.js', 'server');
-  api.addFiles('server/z.js', 'server');
-  api.addFiles('server/main.js', 'server');
+  api.addFiles("server/a.js", "server");
+  api.addFiles("server/z.js", "server");
+  api.addFiles("server/main.js", "server");
 
-  api.addFiles('a.js');
-  api.addFiles('z.js');
-  api.addFiles('main.js');
+  api.addFiles("a.js");
+  api.addFiles("z.js");
+  api.addFiles("main.js");
 });
-````
+```
 
-Using this package as a helper, the package.js file can become this:
+That is a lot of files that Meteor requires you list out!
 
-````javascript
-var packageName = "coolguy22:some-package";
+## Usage
 
-Package.describe({
-  name: packageName,
-  version: '1.2.3',
-  summary: 'A summary here',
-  git: 'The git url goes here',
-  documentation: 'README.md'
-});
+Use this module as follows:
 
-Package.onUse(function(api) {
-  api.versionsFrom('1.0.3.1');
-  api.use('bjwiley2:add-all-files@0.0.1');
-  addAllFiles(api, packageName);
-});
-````
+```javascript
+var MeteorGetAll = require("meteor-pkg-get-all-files");
+
+onUseFiles = MeteorGetAll.getAllFiles("~/myMeteorProject/packages/myPackage");
+onTestFiles = MeteorGetAll.getAllFiles("~/myMeteorProject/packages/myPackage/tests");
+```
+
+onUseFiles returns something like the following:
+
+```json
+{ "client":
+   [ "lib/client/a.js",
+     "lib/client/x.js",
+     "lib/client/main.js",
+     "client/lib/a.js",
+     "client/lib/x.js",
+     "client/lib/main.js",
+     "client/server/a.js",
+     "client/server/css.css",
+     "client/a.js",
+     "client/x.js",
+     "client/main.js" ],
+  "server":
+   [ "lib/server/a.js",
+     "lib/server/x.js",
+     "lib/server/main.js",
+     "server/lib/a.js",
+     "server/lib/x.js",
+     "server/lib/main.js",
+     "server/client/x.js",
+     "server/a.js",
+     "server/x.js",
+     "server/main.js" ],
+  "both":
+   [ "lib/lib/a.js",
+     "lib/lib/x.js",
+     "lib/lib/main.js",
+     "lib/a.js",
+     "lib/x.js",
+     "lib/main.js",
+     "a/lib/a.js",
+     "a/lib/x.js",
+     "a/lib/main.js",
+     "a/a.js",
+     "a/x.js",
+     "a/main.js",
+     "b/lib/a.js",
+     "b/lib/x.js",
+     "b/lib/main.js",
+     "b/a.js",
+     "b/x.js",
+     "b/main.js",
+     "a.js",
+     "x.js",
+     "main.js" ] }
+```
+
+onTestFiles returns something like the following:
+
+```json
+{ "client": [],
+  "server": [],
+  "both": [
+    "setup.js",
+    "tests.js" ] }
+```
 
 ## How it works
 
@@ -82,6 +135,4 @@ according to these rules:
 
 6. The deepest directories are loaded first in depth-first-search fashion
 
-## Todo
-
-1. Provide different ways to handle Package.onTest and Package.onUse
+7. Folders named "tests" are ignored
