@@ -56,6 +56,11 @@ var MeteorGetAll = require("meteor-pkg-get-all-files");
 
 var onUseFiles = MeteorGetAll.getAllFiles("~/myMeteorProject/packages/myPackage");
 var onTestFiles = MeteorGetAll.getAllFiles("~/myMeteorProject/packages/myPackage/tests");
+
+// And then in your Meteor package's package.js:
+api.addFiles(onUseFiles.both);
+api.addFiles(onUseFiles.client, "client");
+api.addFiles(onUseFiles.server, "server");
 ```
 
 onUseFiles returns something like the following:
