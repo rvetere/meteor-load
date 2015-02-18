@@ -1,6 +1,6 @@
 {
   "name": "meteor-load",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A package helper to get all files within your package in a Meteor-esque manner",
   "main": "index.js",
   "scripts": {
