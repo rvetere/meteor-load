@@ -134,10 +134,12 @@ according to these rules:
 
 3. Files within a "client" directory are loaded only to the client
 
-4. Files that match main.* are loaded after everything else
+4. Files that match *.html are loaded before everything else
 
-5. Files are loaded in alphabetical order
+5. Files that match main.* are loaded after everything else
 
-6. The deepest directories are loaded first in depth-first-search fashion
+6. Files are loaded in alphabetical order
 
-7. Folders named "tests" are ignored
+7. The deepest directories are loaded first in depth-first-search fashion
+
+8. Folders named "tests" are ignored

@@ -90,9 +90,9 @@ var addAllFilesApp = function () {
         }
     });
 
-    // Load non main files
+    // Load html files
     folderContent.forEach(function(filename) {
-        if(filename.startsWith("main")) {
+        if(!filename.endsWith(".html")) {
           return;
         }
 
@@ -100,22 +100,27 @@ var addAllFilesApp = function () {
         var stats = Fs.statSync(absoluteFilename);
 
         if(!stats.isDirectory() && isValidFile(absoluteFilename, isRoot)) {
-          var context = "clientAndServer";
+          addFile(absoluteFilename, client, server);
+        }
+    });
 
-          if(client) {
-            context = "clientOnly";
-          }
-          else if(server) {
-            context = "serverOnly";
-          }
+    // Load non main, non html files
+    folderContent.forEach(function(filename) {
+        if(filename.startsWith("main.") || filename.endsWith(".html")) {
+          return;
+        }
 
+        var absoluteFilename = Path.resolve(folder, filename);
+        var stats = Fs.statSync(absoluteFilename);
+
+        if(!stats.isDirectory() && isValidFile(absoluteFilename, isRoot)) {
           addFile(absoluteFilename, client, server);
         }
     });
 
     // Load main files
     folderContent.forEach(function(filename) {
-        if(!filename.startsWith("main")) {
+        if(!filename.startsWith("main.")) {
           return;
         }
 
@@ -123,15 +128,6 @@ var addAllFilesApp = function () {
         var stats = Fs.statSync(absoluteFilename);
 
         if(!stats.isDirectory() && isValidFile(absoluteFilename, isRoot)) {
-          var context = "clientAndServer";
-
-          if(client) {
-            context = "clientOnly";
-          }
-          else if(server) {
-            context = "serverOnly";
-          }
-
           addFile(absoluteFilename, client, server);
         }
     });
