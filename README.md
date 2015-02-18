@@ -52,10 +52,10 @@ That is a lot of files that Meteor requires you list out!
 Use this module as follows:
 
 ```javascript
-var MeteorGetAll = require("meteor-pkg-get-all-files");
+var MeteorLoad = require("meteor-load");
 
-var onUseFiles = MeteorGetAll.getAllFiles("~/myMeteorProject/packages/myPackage");
-var onTestFiles = MeteorGetAll.getAllFiles("~/myMeteorProject/packages/myPackage/tests");
+var onUseFiles = MeteorLoad.getAllFiles("~/myMeteorProject/packages/myPackage");
+var onTestFiles = MeteorLoad.getAllFiles("~/myMeteorProject/packages/myPackage/tests");
 
 // And then in your Meteor package's package.js:
 api.addFiles(onUseFiles.both);
