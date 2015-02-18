@@ -1,6 +1,6 @@
 {
   "name": "meteor-pkg-get-all-files",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A package helper to get all files within your package in a Meteor-esque manner",
   "main": "index.js",
   "scripts": {
