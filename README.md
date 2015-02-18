@@ -1,4 +1,4 @@
-# meteor-pkg-get-all-files
+# meteor-load
 
 A Meteor package builder"s helper to get all files within your package in a
 Meteor-esque manner
