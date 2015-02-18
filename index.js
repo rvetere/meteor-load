@@ -90,9 +90,9 @@ var addAllFilesApp = function () {
         }
     });
 
-    // Load html files
+    // Load html and css files
     folderContent.forEach(function(filename) {
-        if(!filename.endsWith(".html")) {
+        if(!(filename.endsWith(".html") || filename.endsWith(".css"))) {
           return;
         }
 
@@ -104,9 +104,10 @@ var addAllFilesApp = function () {
         }
     });
 
-    // Load non main, non html files
+    // Load non main, html, css files
     folderContent.forEach(function(filename) {
-        if(filename.startsWith("main.") || filename.endsWith(".html")) {
+        if(filename.startsWith("main.") || filename.endsWith(".html") ||
+          filename.endsWith(".css")) {
           return;
         }
 

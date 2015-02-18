@@ -128,18 +128,22 @@ onTestFiles returns something like the following:
 Meteor-esque! The JavaScript, HTML, and CSS files in your package are loaded
 according to these rules:
 
-1. Files within a "lib" directory are loaded first
+### Directories
 
-2. Files within a "server" directory are loaded only to the server
+1. Everything within "lib" directories are loaded first
 
-3. Files within a "client" directory are loaded only to the client
+2. Everything within "server" directories are loaded only to the server
 
-4. Files that match *.html are loaded before everything else
+3. Everything within "client" directories are loaded only to the client
 
-5. Files that match main.* are loaded after everything else
+4. Everything within "tests" directories are ignored
 
-6. Files are loaded in alphabetical order
+5. The deepest directories are loaded first in depth-first-search fashion
 
-7. The deepest directories are loaded first in depth-first-search fashion
+### Files
 
-8. Folders named "tests" are ignored
+1. Files that match *.html and *.css  are loaded before everything else
+
+2. Files that match main.* are loaded after everything else
+
+3. Files are loaded in alphabetical order
