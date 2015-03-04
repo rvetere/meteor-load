@@ -20,6 +20,7 @@ var addAllFilesApp = function () {
 
   var main = function (rootDir) {
     contexts = {
+      lib: [],
       client: [],
       server: [],
       both: []
@@ -100,7 +101,7 @@ var addAllFilesApp = function () {
         var stats = Fs.statSync(absoluteFilename);
 
         if(!stats.isDirectory() && isValidFile(absoluteFilename, isRoot)) {
-          addFile(absoluteFilename, client, server);
+          addFile(absoluteFilename, lib, client, server);
         }
     });
 
@@ -115,7 +116,7 @@ var addAllFilesApp = function () {
         var stats = Fs.statSync(absoluteFilename);
 
         if(!stats.isDirectory() && isValidFile(absoluteFilename, isRoot)) {
-          addFile(absoluteFilename, client, server);
+          addFile(absoluteFilename, lib, client, server);
         }
     });
 
@@ -129,19 +130,21 @@ var addAllFilesApp = function () {
         var stats = Fs.statSync(absoluteFilename);
 
         if(!stats.isDirectory() && isValidFile(absoluteFilename, isRoot)) {
-          addFile(absoluteFilename, client, server);
+          addFile(absoluteFilename, lib, client, server);
         }
     });
   };
 
-  var addFile = function (absolute, client, server) {
+  var addFile = function (absolute, lib, client, server) {
     var architecture = "both";
 
-    if(client) {
+    if (client) {
       architecture = "client";
     }
-    else if(server) {
+    else if (server) {
       architecture = "server";
+    } else if (lib) {
+      architecture = "lib"
     }
 
     contexts[architecture].push(absolute.replace(packageRoot, ""));
