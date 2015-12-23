@@ -1,7 +1,17 @@
 # meteor-load
 
 A Meteor package builder"s helper to get all files within your package in a
-Meteor-esque manner
+Meteor-esque manner.
+
+We use this package as part of a larger node-based build tool 
+called Norma (https://github.com/NewSpring/Norma), specifically 
+norma-meteor-load (https://github.com/NewSpring/norma-meteor-load). 
+We would love for you to use Norma as it will address the problem 
+of completing the package.js file for you.
+
+Our attempts at integrating this module directly into Meteor's package.js 
+file have been unsuccessfull so far. If you are able to integrate this 
+node module directly within Meteor, we would love to hear about it!
 
 ## The problem being solved
 
@@ -49,18 +59,18 @@ That is a lot of files that Meteor requires you list out!
 
 ## Usage
 
-Use this module as follows:
+You can use this package outside the scope of meteor, 
+in a simple node script, to generate a list of files that you can 
+copy/paste into your package.js like so:
 
 ```javascript
 var MeteorLoad = require("meteor-load");
-
 var onUseFiles = MeteorLoad.getAllFiles("~/myMeteorProject/packages/myPackage");
 var onTestFiles = MeteorLoad.getAllFiles("~/myMeteorProject/packages/myPackage/tests");
 
-// And then in your Meteor package's package.js:
-api.addFiles(onUseFiles.both);
-api.addFiles(onUseFiles.client, "client");
-api.addFiles(onUseFiles.server, "server");
+// You can paste these lists into your package.js
+console.log(onUseFiles); 
+console.log(onTestFiles);
 ```
 
 onUseFiles returns something like the following:
