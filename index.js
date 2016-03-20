@@ -18,7 +18,7 @@ var addAllFilesApp = function () {
   var contexts = null;
   var packageRoot = null;
 
-  var main = function (rootDir, destDir) {
+  var main = function (rootDir, destDir, optionalExts) {
     contexts = {
       lib: [],
       client: [],
@@ -26,13 +26,17 @@ var addAllFilesApp = function () {
       both: []
     };
 
+    if (optionalExts) {
+        exts = optionalExts;
+    }
+
     if (destDir) {
       packageRoot = Path.resolve(destDir);
     } else {
       packageRoot = Path.resolve(rootDir);
     }
 
-    srcRoot = Path.resolve(rootDir)
+    var srcRoot = Path.resolve(rootDir);
 
     if(!packageRoot.endsWith("/")) {
       packageRoot = packageRoot + "/";
